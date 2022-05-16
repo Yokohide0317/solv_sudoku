@@ -1,4 +1,5 @@
 import itertools
+from tqdm import tqdm
 
 def senbetsu(inp_line, line_of_all):
     tmp = []
@@ -39,8 +40,11 @@ def solv_main(inp):
     predict_list = [
         senbetsu(inp[i], all_list) for i in range(0, 9)
     ]
-    print(f"各行の候補数: {[len(n) for n in predict_list]}")
+    candidate = [len(n) for n in predict_list]
+    bar = tqdm(total=candidate[0])
+    print(f"各行の候補数: {candidate}")
     for l0 in predict_list[0]:
+        bar.update(1)
         for l1 in predict_list[1]:
             if not check_by_verticle(inp, [l1]):
                 continue
